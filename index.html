@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Help - Eclipse Platform</title>
+    <style>
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20%;
+            height: 98vh;
+            overflow-y: scroll;
+        }
+
+        iframe {
+            width: 79%;
+            float: right;
+            height: 98vh;
+        }
+
+        /* 独立一行 */
+        nav a {
+            display: block;
+            text-decoration: none;
+            color: #000;
+        }
+
+        nav {
+            font-size: 0.95rem;
+        }
+
+        nav>details>summary {
+            font-weight: bold;
+        }
+
+        details {
+            padding-left: 2em
+        }
+
+        details>summary {
+            margin-left: -2em
+        }
+
+        /*行内元素 否则会多出一行*/
+        summary>a {
+            display: inline;
+        }
+
+        nav>details>summary::before {
+            content: url("images/toc_open.gif");
+
+        }
+
+        nav details>a::before {
+            content: url("images/topic.gif");
+        }
+
+        nav>details details>summary>a::before {
+            content: url("images/container_obj.gif");
+        }
+
+        nav>details details>summary>a.ad::before {
+            content: url("images/container_topic.gif");
+        }
+    </style>
+    <script>
+
+        const parser = new DOMParser();
+        let context;//帮助文档所在路径 上下文
+        let hrefContext;//带http的全路径
+        let windowsUrl;//当前路径url
+
+        const load = async () => {
+
+            //读取当前url
+            windowsUrl = new URL(window.location.href);
+            //读取Rss参数
+            let tocfragment = windowsUrl.searchParams.get("tocfragment");
+
+            //没有传递值则加载默认值
+            tocfragment = tocfragment || '../local-doc-help.eclipse.org-2018-12/tocfragment.xml';
+
+            console.log("tocfragment:" + tocfragment);
+
+            //获取 文档所在上下文 路径
+            context = tocfragment.substring(0, tocfragment.lastIndexOf("/"));
+            console.log("context:" + context);
+            hrefContext = new URL(context, window.location.href).href;//获取帮助文档的全路径
+            const response = await fetch(tocfragment).then(response => response.status == 200 ? response.text() : '');
+
+            //读取xml文件为 dom 文档 , 与HTML的dom方法基本类似
+            const doc = parser.parseFromString(response, "application/xml");
+            let navHTML = "";
+            doc.querySelectorAll("node").forEach((node) => {
+                let href = node.getAttribute("href");
+                //href="../topic/../nav/3"  没有页面
+                // href="../topic/org.eclipse.acceleo.doc/pages/index.html?cp=5" 有页面
+                if (href.indexOf(".htm") > 0) {//html可达
+                    navHTML += `
+                                <details 
+                                    ontoggle="details_toggle(this)" 
+                                    data-id="${node.getAttribute("id")}" 
+                                    data-href="${node.getAttribute("href")}" 
+                                    data-init="false">
+                                           <summary><a target="_iframe" href="${context}/${href.replace('../topic/', '')}"> ${node.getAttribute("title")}</a></summary>
+                                </details>`;
+                } else {
+                    navHTML += `
+                                <details 
+                                    ontoggle="details_toggle(this)" 
+                                    data-id="${node.getAttribute("id")}" 
+                                    data-href="${node.getAttribute("href")}" 
+                                    data-init="false" >
+                                    <summary > <a> ${node.getAttribute("title")} </a></summary> 
+                                 </details>`;
+                }
+            });
+            document.getElementById("navigation").innerHTML = navHTML;
+
+            findHash();//查找打开的网页
+        }
+
+
+        async function details_toggle(details) {
+
+            if (details.dataset.init == "false") {
+                details.dataset.init = "true";//初始化
+
+                let context2 = details.dataset.id;//局部上下文 第二部分
+
+                //context2 = context2.substring(0, context2.lastIndexOf("/"));
+                context2 = context2.split("/")[1];//获得第一部分 0是空格
+
+                const response = await fetch(context + details.dataset.id).then(response => response.status == 200 ? response.text() : '');
+                //console.log(response);
+                const doc = parser.parseFromString(response, "application/xml");
+
+                let detailsHTML = "";//获取拼接元素
+
+                let toc = doc.children[0];//根节点 toc 
+
+
+                /**
+                    //xml 特殊节点 org.eclipse.linuxtools.docker.docs/toc-doc.xml 特殊同时有其他xml
+                    //依旧不完美 会有 三重 原因是 org.eclipse.linuxtools.docker.docs/toc.xml 本来就是二层 = =||
+                    Docker Tooling User Guide
+                     Docker Tooling User Guide
+                         Docker Tooling User Guide 
+                **/
+                let link = toc.querySelector(':scope>link');
+                if (link) {
+                    detailsHTML += `
+                        <details ontoggle="details_toggle(this)" 
+                                 data-id="/${context2}/${link.getAttribute("toc")}" 
+                                 data-href="${link.getAttribute("toc")}" 
+                                 data-init="false" >
+                                   <summary>${toc.getAttribute("label")}</summary>
+                        </details>`;
+                }
+
+                toc.querySelectorAll(":scope>topic").forEach((topic) => {
+                    detailsHTML += topic2html(topic, context, context2);
+                });
+                //第一个元素 toc 也看做 topic 的一个节点 结构类似 TODO 逻辑理不清
+                //org.eclipse.linuxtools.docker.docs/toc-doc.xml 同时有link 和 topic 
+                //detailsHTML= topic2html(doc.querySelector('toc'), context, context2);
+
+                //元素前 添加 新内容
+                details.insertAdjacentHTML("beforeend", detailsHTML);
+
+                console.log("init:" + details.dataset.id);
+            }
+
+            //鼠标连续点击三次展开全部节点
+            clickCount++;//两秒清零
+            setTimeout(function () {
+                clickCount = 0;
+            }, 2000);
+            if (clickCount == 3) {
+                detailsOpen(details);
+            }
+        }
+        let clickCount = 0;//鼠标点击数目
+
+
+
+        //topic 节点转换为html 方法可以递归
+        function topic2html(topic, context, context2) {
+            let topicHTML = "";
+            //<topic label="Tips and tricks" href="tips/platform_tips.html"> <link toc="topics_Tips.xml" /> </topic>
+            //获取节点子目录
+            let link = topic.querySelector(":scope>link");
+            //获取节点中超链接
+            let href = topic.getAttribute("href");
+            //获取子元素
+            let subTopics = topic.querySelectorAll(":scope>topic");
+
+            //叶子结点 没有子节点
+            if (subTopics.length == 0 && !link) {
+                topicHTML += ` <a target="_iframe" href="${context}/${context2}/${topic.getAttribute("href")}"> ${topic.getAttribute("label")} </a>`;
+            } else {
+
+                // xml 子目录
+                if (link) {//xml 特殊节点
+                    topicHTML += ` <details ontoggle="details_toggle(this)" 
+                                            data-id="/${context2}/${link.getAttribute("toc")}" 
+                                            data-href="${link.getAttribute("href")}" 
+                                            data-init="false" >`;
+                } else {//普通节点
+                    topicHTML += `<details>`;
+                }
+
+                if (href) {//如果有超链接
+                    topicHTML += ` <summary><a class='ad' target="_iframe" href="${context}/${context2}/${topic.getAttribute("href")}"> ${topic.getAttribute("label")} </a></summary>`;
+                } else {
+                    topicHTML += ` <summary><a> ${topic.getAttribute("label")} </a> </summary>`;
+                }
+
+                //递归
+                subTopics.forEach((subTopic) => {
+                    topicHTML += topic2html(subTopic, context, context2);
+                });
+
+                topicHTML += ` </details>`;
+            }
+            return topicHTML;
+        }
+
+        //在url中保持浏览位子 保证可分享
+        function iframeLoad() {
+
+            let _iframe = document.getElementById('_iframe');
+
+            var iframeWindow = _iframe.contentWindow;
+            if (iframeWindow && iframeWindow.document.location.href.indexOf(hrefContext) >= 0) {
+                var href = iframeWindow.document.location.href.replace(hrefContext, "");
+                console.log("iframe reload:" + href);
+                window.location.hash = href;
+                // window.location.hash = encodeURIComponent(href);
+            }
+        }
+
+        //查找打开的文档在左边导航栏哪里处
+        let goHash = false;
+        function findHash() {
+            let hash = window.location.hash;
+            if (hash) {
+
+                let _iframe = document.getElementById('_iframe');
+
+                //删除开头的 #/ 或者 /
+                hash = hash.substring(1);
+
+                console.log("_iframe reload:" + hrefContext + hash);
+                _iframe.contentWindow.document.location.href = hrefContext + hash;
+
+                // _iframe.src TODO 自动遍历左边数据
+                hash = hash.startsWith('/') ? hash.substring(1) : hash;
+                let words = hash.split('/');
+                if (words.length > 0) {
+                    console.log('words:' + words);
+                    document.querySelectorAll("nav>details").forEach((detail) => {
+
+                        if (detail.dataset.id && detail.dataset.id.indexOf(`/${words[0]}/`) >= 0) {
+                            goHash = true;
+                            detailsOpen(detail);
+                        }
+                    });
+
+
+                }
+            }
+        }
+
+        let detailsNum = 0, detailsOpenNum = 0;//查看节点是否完全打开
+        function detailsOpen(detail) {
+
+            detailsNum++;
+            detail.ontoggle();
+            detail.open = true;//打开
+            console.log("open details:" + detail.dataset.id);
+
+            //加载动态数据会有一定延迟 所以需要使用定时器
+            var interval = setInterval(function () {
+                let flag = false;//是否有未打开的节点
+                detail.querySelectorAll("details").forEach((_detail) => {
+                    console.log("look  details:" + _detail.dataset.id);
+                    if (_detail.open == false) {
+                        _detail.ontoggle && _detail.ontoggle();
+                        _detail.open = true;
+                        flag = true;
+                        console.log("open details:" + _detail.dataset.id);
+                    }
+                });
+                if (!flag) {
+                    clearInterval(interval);
+                    detailsOpenNum++;
+                    checkDetailsOpened();
+                }
+                console.log("details Interval");
+            }, 1000);
+        }
+
+
+        //查看节点是否全部加载完成
+        function checkDetailsOpened() {
+            console.log("detailsNum " + detailsNum + " " + detailsOpenNum);
+            if (detailsNum == detailsOpenNum) {
+                console.log("节点全部加载完成");
+            }
+            if (goHash) {
+                goHash = false;
+                let hash = window.location.hash.substring(1);
+                document.querySelectorAll("nav a").forEach((a) => {
+                    if (a.href && a.href.indexOf(hash) > 0 && a.href.endsWith(hash)) {
+                        a.scrollIntoView();//导航栏跳转
+                        a.style.background = "#f47920";//颜色显著一下
+                    }
+                });
+            }
+
+        }
+
+
+
+        window.onload = load;
+    </script>
+
+</head>
+
+<body>
+
+    <nav id="navigation">
+
+    </nav>
+
+    <iframe frameborder=0 id="_iframe" name="_iframe" src="" onload="iframeLoad()">
+
+    </iframe>
+
+
+</body>
+
+</html>
