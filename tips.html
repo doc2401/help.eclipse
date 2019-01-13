@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style>
+        iframe {
+            width: 80%;
+        }
+        li{
+            margin : 0.2rem;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+
+<script>
+
+    let windowsUrl;//当前路径url
+    let provider;
+    let baseUrl;
+
+    const load = async () => {
+
+        //读取当前url
+        windowsUrl = new URL(window.location.href);
+        //读取provider参数
+        let providerParam = windowsUrl.searchParams.get('provider');
+        //没有传递值则加载默认值
+        providerParam = providerParam || '../local-doc-help.eclipse.org-tips/org.eclipse.jdt.tips.user/provider.json';
+
+        console.log('provider:' + providerParam);
+
+        provider = await fetch(providerParam).then(response => response.status == 200 ? response.json() : {});
+        provider = provider.provider;
+
+        document.getElementById('_img').src = provider.image;
+        document.title = provider.description;
+
+        baseUrl = new URL(providerParam.substring(0, providerParam.lastIndexOf('/')), window.location.href).href;//获取帮助文档的全路径
+        console.log('baseUrl:' + baseUrl);
+ 
+        let olHTML = '';
+        for (let tip of provider.tips) {
+            console.log('tip:' + tip);
+            olHTML += `
+            <li>
+                <details ontoggle='details_toggle(this)'  
+                         data-init='false' 
+                         data-src='${tip.url.replace('${baseUrl}', baseUrl)}'> 
+                            <summary>${tip.date}    ${tip.subject} </summary>
+                            <iframe  onload='resizeIframe(this)'> </iframe>
+                </details>
+            </li>`;
+        }
+        document.getElementById('_ol').innerHTML = olHTML;
+    }
+    window.onload = load;
+
+    function details_toggle(details) {
+        if (details.dataset.init == 'false') {
+            details.dataset.init = 'true';//初始化
+            details.querySelector('iframe').src = details.dataset.src;
+        }
+    }
+    function resizeIframe(obj) {
+        obj.style.height = obj.contentWindow.document.body.scrollHeight*1.1 + 'px';
+    }
+</script>
+
+<body>
+
+    <img id='_img'>
+
+    <ol id='_ol'>
+
+
+    </ol>
+
+</body>
+
+</html>
