@@ -237,6 +237,7 @@
 
             var iframeWindow = _iframe.contentWindow;
             if (iframeWindow && iframeWindow.document.location.href.indexOf(hrefContext) >= 0) {
+                document.title = iframeWindow.document.title ;
                 var href = iframeWindow.document.location.href.replace(hrefContext, "");
                 console.log("iframe reload:" + href);
                 window.location.hash = href;
