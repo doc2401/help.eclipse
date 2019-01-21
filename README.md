@@ -5,7 +5,7 @@
 
 [help](help.html)
 
-[local](tips.html)
+[tips](tips.html)
 
 
 ## Eclipse Documentation HTML Help Center
