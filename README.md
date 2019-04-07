@@ -76,6 +76,7 @@ git push --force origin master:gh-pages
  rsync  -avz  --safe-links   --recursive    mirrors.shu.edu.cn::eclipse/eclipse/tips/ ../local-doc-help.eclipse.org-tips
 
 
+## org.eclipse.jst.ws.cxf.doc.user_1.0.300.v201802222200.jar 有一些另外都 jar 不在 xml 里面 。额外解压
 
 ```
 
