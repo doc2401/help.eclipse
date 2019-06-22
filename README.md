@@ -1,34 +1,23 @@
- 
 
+[Help - Eclipse Platform](https://help.eclipse.org)
+Eclipse 文档静态版
 
-# nav
-
-[help](help.html)
-
-[tips](tips.html)
-
-
-## Eclipse Documentation HTML Help Center
-
-Current releases
-----------------
-
-*  201903201000 [Eclipse IDE 2019-03 (4.11) Documentation](https://help.eclipse.org/2019-03/index.jsp) [local](help.html?tocfragment=../local-doc-help.eclipse.org-2019-03/tocfragment.xml)
-
-Older releases
---------------
-
-* 201812191000 [Eclipse IDE 2018-12 (4.10) Documentation](http://help.eclipse.org/2018-12/index.jsp) [local](help.html?tocfragment=../local-doc-help.eclipse.org-2018-12/tocfragment.xml)
-* 201809191002 [Eclipse IDE 2018-09 (4.9) Documentation](http://help.eclipse.org/2018-09/index.jsp) [local](help.html?tocfragment=../local-doc-help.eclipse.org-2018-09/tocfragment.xml)
-* 201806271001  [Eclipse Photon (4.8) Documentation](http://help.eclipse.org/photon/index.jsp) [local](help.html?tocfragment=../local-doc-help.eclipse.org-photon/tocfragment.xml)
-* 201804111000  [Eclipse Oxygen (4.7) Documentation](http://help.eclipse.org/oxygen/index.jsp) [local](help.html?tocfragment=../local-doc-help.eclipse.org-oxygen/tocfragment.xml)
-* 201705151400[Eclipse Neon (4.6) Documentation](http://help.eclipse.org/neon/index.jsp) [local](help.html?tocfragment=../local-doc-help.eclipse.org-neon/tocfragment.xml)
-* 201602261000  [Eclipse Mars (4.5) Documentation](http://help.eclipse.org/mars/index.jsp) [local](help.html?tocfragment=../local-doc-help.eclipse.org-mars/tocfragment.xml)
-* 201502271000  [Eclipse Luna (4.4) Documentation](http://help.eclipse.org/luna/index.jsp) [local](help.html?tocfragment=../local-doc-help.eclipse.org-luna/tocfragment.xml)
-* 201402280900 [Eclipse Kepler (4.3) Documentation](http://help.eclipse.org/kepler/index.jsp) [local](help.html?tocfragment=../local-doc-help.eclipse.org-kepler/tocfragment.xml)
+`帮助文档 Eclipse documentation` [help.html](help.html)
+`每日提示 Tip of the Day` [tips.html](tips.html)
 
  
 
+* 201906191000 [Eclipse IDE 2019-03 (4.11) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-2019-06/tocfragment.xml) 
+* 201903201000 [Eclipse IDE 2019-03 (4.11) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-2019-03/tocfragment.xml) 
+* 201812191000 [Eclipse IDE 2018-12 (4.10) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-2018-12/tocfragment.xml)
+* 201809191002 [Eclipse IDE 2018-09 (4.9) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-2018-09/tocfragment.xml)
+* 201806271001 [Eclipse Photon (4.8) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-photon/tocfragment.xml)
+* 201804111000 [Eclipse Oxygen (4.7) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-oxygen/tocfragment.xml)
+* 201705151400 [Eclipse Neon (4.6) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-neon/tocfragment.xml)
+* 201602261000 [Eclipse Mars (4.5) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-mars/tocfragment.xml)
+* 201502271000 [Eclipse Luna (4.4) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-luna/tocfragment.xml)
+* 201402280900 [Eclipse Kepler (4.3) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-kepler/tocfragment.xml)
+ 
 
 # script
 
@@ -77,7 +66,7 @@ git push --force origin master:gh-pages
 
 
  ## 同步目录tip
- rsync  -avz  --safe-links   --recursive    mirrors.shu.edu.cn::eclipse/eclipse/tips/ ../local-doc-help.eclipse.org-tips
+ rsync  -avz  --safe-links   --recursive    mirrors.tuna.tsinghua.edu.cn::eclipse/eclipse/tips/ ../local-doc-help.eclipse.org-tips
 
 
 ## org.eclipse.jst.ws.cxf.doc.user_1.0.300.v201802222200.jar 有一些另外都 jar 不在 xml 里面 。额外解压
@@ -86,8 +75,12 @@ git push --force origin master:gh-pages
 
 
 # reference
+ 
 
- 待补充说明
+`本地启动帮助中心` [Standalone help](https://help.eclipse.org/2019-06/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/ua_help_setup_infocenter.htm&cp=2_0_19_1_0_2)
+
+[Standalone help](help.html#/org.eclipse.platform.doc.isv/guide/ua_help_setup_standalone.htm)
+
 
 
 [Tree-nav based on details/summary](https://codepen.io/dsheiko/pen/MvEpXm)

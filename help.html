@@ -99,7 +99,7 @@
                 let href = node.getAttribute("href");
                 //href="../topic/../nav/3"  没有页面
                 // href="../topic/org.eclipse.acceleo.doc/pages/index.html?cp=5" 有页面
-                if (href.indexOf(".htm") > 0) {//html可达
+                if (href && href.indexOf(".htm") > 0) {//html可达
                     navHTML += `
                                 <details 
                                     ontoggle="details_toggle(this)" 
