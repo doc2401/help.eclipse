@@ -32,6 +32,9 @@ Older releases
 
 # script
 
+`更新日志`[CHANGELOG.md](CHANGELOG.md)
+
+
  ```bash
  
  # 代码中有中文注释 需要 指定 UTF-8编码(centos)
@@ -41,7 +44,7 @@ javac  -encoding UTF-8  ExtractHelpLib.java
 rsync download.eclipse.org::eclipseMirror/releases/
 
 ## 获取最佳镜像地址 Direct link to file (download starts immediately from best mirror)
-curl -I "https://www.eclipse.org/downloads/download.php?file=/&r=1" |grep Location
+curl -I "https://www.eclipse.org/downloads/download.php?file=/&r=1" |grep ocation
 Location: http://ftp.osuosl.org/pub/eclipse/
 ## 查看镜像目录 不带pub前缀
 rsync ftp.osuosl.org::eclipse/releases/
