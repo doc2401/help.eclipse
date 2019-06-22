@@ -134,17 +134,17 @@
 
                 //处理相对路径问题
                 // "/org.eclipse.jst.ws.jaxws.doc.user/../org.eclipse.jst.ws.cxf.doc.user/tocreference.xml"
-                if(context2.indexOf('/.')>=0){//如果是有相对路径 /. 或者 /..
-                    context2=(new URL(context2,windowsUrl)).pathname;
+                if (context2.indexOf('/.') >= 0) {//如果是有相对路径 /. 或者 /..
+                    context2 = (new URL(context2, windowsUrl)).pathname;
                 }
                 //context2 = context2.substring(0, context2.lastIndexOf("/"));
                 context2 = context2.split("/")[1];//获得第一部分 0是空格
 
                 const response = await fetch(context + details.dataset.id).then(response => response.status == 200 ? response.text() : '');
                 //console.log(response);
-                
-                if(!response){//内容不正确则输出日志
-                    console.error(context + details.dataset.id +" response :"+response);
+
+                if (!response) {//内容不正确则输出日志
+                    console.error(context + details.dataset.id + " response :" + response);
                     return;
                 }
 
@@ -205,7 +205,7 @@
             //<topic label="Tips and tricks" href="tips/platform_tips.html"> <link toc="topics_Tips.xml" /> </topic>
             //获取节点子目录
             let link = topic.querySelector(":scope>link");
-            
+
             //<topic label="Concepts"><anchor id="concepts"/></topic>
             let anchor = topic.querySelector(":scope>anchor");
 
@@ -225,7 +225,7 @@
                                             data-id="/${context2}/${link.getAttribute("toc")}" 
                                             data-href="${link.getAttribute("href")}" 
                                             data-init="false" >`;
-                }else if(anchor){
+                } else if (anchor) {
                     topicHTML += ` <details ontoggle="details_toggle(this)" 
                                             data-id="/${context2}/toc${anchor.getAttribute("id")}.xml" 
                                             data-href="${anchor.getAttribute("href")}" 
@@ -257,7 +257,7 @@
 
             var iframeWindow = _iframe.contentWindow;
             if (iframeWindow && iframeWindow.document.location.href.indexOf(hrefContext) >= 0) {
-                document.title = iframeWindow.document.title ;
+                document.title = iframeWindow.document.title;
                 var href = iframeWindow.document.location.href.replace(hrefContext, "");
                 console.log("iframe reload:" + href);
                 window.location.hash = href;
@@ -344,6 +344,42 @@
                 });
             }
 
+        }
+
+        //
+        //检查全部地址 是否有404
+        async function checkLink() {
+
+            //不会阻塞 囧
+            //document.querySelectorAll("nav>details").forEach((detail) => {  detailsOpen(detail); }); 
+            //console.log("Open all");
+
+
+            let nodes = new Array();
+
+
+            let details = document.querySelectorAll("nav details");
+            for (i = 0; i < details.length; i++) {
+                let detail = details[i];
+                if (detail.dataset.id && detail.dataset.id.endsWith('xml')) {
+                    if (! await fetch(context + detail.dataset.id).then(async (response) => response.status == 200)) {
+                        nodes.push(detail.dataset.id);
+                    }
+                }
+            }
+            console.log("nodes length " + nodes.length);
+            nodes = [...new Set(nodes)];
+            console.log("nodes unique length " + nodes.length);
+            let tocfragment = "";
+            for (let i in nodes) {
+                tocfragment += `<node id="${nodes[i]}" ></node>`;
+            }
+            tocfragment = `<?xml version="1.0" encoding="UTF-8"?>
+                             <tree_data>
+                             ${tocfragment}
+                          </tree_data>`;
+
+            console.log(tocfragment);
         }
 
 
