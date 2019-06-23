@@ -11,12 +11,10 @@
             width: 80%;
         }
         li{
-            margin : 0.2rem;
-            font-size: 1.2rem;
+            margin : 0.5rem;
+            font-size: 1.5em;
         }
-    </style>
-</head>
-
+    </style> 
 <script>
 
     let windowsUrl;//当前路径url
@@ -47,13 +45,13 @@
         for (let tip of provider.tips) {
             console.log('tip:' + tip);
             olHTML += `
-            <li>
+            <li> 
                 <details ontoggle='details_toggle(this)'  
                          data-init='false' 
                          data-src='${tip.url.replace('${baseUrl}', baseUrl)}'> 
                             <summary>${tip.date}    ${tip.subject} </summary>
                             <iframe  onload='resizeIframe(this)'> </iframe>
-                </details>
+                </details> 
             </li>`;
         }
         document.getElementById('_ol').innerHTML = olHTML;
@@ -70,7 +68,7 @@
         obj.style.height = obj.contentWindow.document.body.scrollHeight*1.1 + 'px';
     }
 </script>
-
+</head>
 <body>
 
     <img id='_img'>
