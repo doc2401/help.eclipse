@@ -8,7 +8,7 @@ Eclipse 文档静态版
 
 # 文档列表 
 
-* 201906191000 [Eclipse IDE 2019-03 (4.11) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-2019-06/tocfragment.xml) 
+* 201906191000 [Eclipse IDE 2019-06 (4.12) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-2019-06/tocfragment.xml) 
 * 201903201000 [Eclipse IDE 2019-03 (4.11) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-2019-03/tocfragment.xml) 
 * 201812191000 [Eclipse IDE 2018-12 (4.10) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-2018-12/tocfragment.xml)
 * 201809191002 [Eclipse IDE 2018-09 (4.9) Documentation](help.html?tocfragment=../local-doc-help.eclipse.org-2018-09/tocfragment.xml)
