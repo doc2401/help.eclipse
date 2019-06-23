@@ -3,8 +3,9 @@
 Eclipse 文档静态版
 
 `帮助文档 Eclipse documentation` [help.html](help.html)
-`每日提示 Tip of the Day` [tips.html](tips.html)
 
+`Tip of the Day` [tips.html](tips.html)
+`每日提示 机翻` [tips.html](tips.html?provider=../local-doc-help.eclipse.org-tips/org.eclipse.jdt.tips.user.zh-CN/provider.json)
 
 # 文档列表 
 
