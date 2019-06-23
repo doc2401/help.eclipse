@@ -216,7 +216,13 @@
 
             //叶子结点 没有子节点
             if (subTopics.length == 0 && !link && !anchor) {
-                topicHTML += ` <a target="_iframe" href="${context}/${context2}/${topic.getAttribute("href")}"> ${topic.getAttribute("label")} </a>`;
+
+                if (href.startsWith("http:") || href.startsWith("https:") || href.startsWith("//")) {
+                    topicHTML += ` <a target="_iframe" href="${href}" title="外链可能需要右键窗口打开"> ${topic.getAttribute("label")} </a>`;
+                } else {
+                    topicHTML += ` <a target="_iframe" href="${context}/${context2}/${href}"> ${topic.getAttribute("label")} </a>`;
+                }
+
             } else {
 
                 // xml 子目录
@@ -234,8 +240,9 @@
                     topicHTML += `<details>`;
                 }
 
-                if (href) {//如果有超链接
-                    topicHTML += ` <summary><a class='ad' target="_iframe" href="${context}/${context2}/${topic.getAttribute("href")}"> ${topic.getAttribute("label")} </a></summary>`;
+                if (href) {//如果有超链接 
+                    topicHTML += ` <summary><a class='ad' target="_iframe" href="${context}/${context2}/${href}"> ${topic.getAttribute("label")} </a></summary>`;
+
                 } else {
                     topicHTML += ` <summary><a> ${topic.getAttribute("label")} </a> </summary>`;
                 }
