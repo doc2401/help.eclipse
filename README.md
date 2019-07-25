@@ -3,6 +3,7 @@
 Eclipse 文档静态版
 
 `帮助文档 Eclipse documentation` [help.html](help.html)
+`机翻` [help.html](help.html?tocfragment=../local-doc-help.eclipse.org-2019-06.zh/tocfragment.xml)
 
 `Tip of the Day` [tips.html](tips.html)
 `每日提示 机翻` [tips.html](tips.html?provider=../local-doc-help.eclipse.org-tips/org.eclipse.jdt.tips.user.zh-CN/provider.json)
