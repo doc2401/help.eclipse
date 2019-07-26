@@ -19,8 +19,7 @@
         #linkNav {
             position: fixed;
             bottom: 0;
-            left: 15%;
-            width: 5%;
+            right: 81%;
             padding-top: 0.5em;
             background: rgba(192, 192, 192, 0.5);
 
@@ -95,12 +94,12 @@
             if (navigation.style.display == '') {
                 navigation.style.display = 'none';//隐藏
                 document.getElementById('_iframe').style.width = "100%";
-                linkNav.style.left = '0%';//还原 
+                linkNav.style.right = '0%';//隐藏
             } else {
                 navigation.style.display = '';//还原
                 document.getElementById('_iframe').style.width = "79%";
 
-                linkNav.style.left = '15%';//还原  
+                linkNav.style.right = '81%';//还原  
             }
         }
 
