@@ -164,7 +164,7 @@
                 tocfragmentT = tocfragment.replace("/tocfragment.xml", ".zh/tocfragment.xml");
             }
             //是否存在
-            tocfragmentTFlag = await fetch(tocfragment).then(response => response.status == 200);
+            tocfragmentTFlag = await fetch(tocfragmentT).then(response => response.status == 200);
             if (tocfragmentTFlag) {
                 tocfragmentTURL = new URL(window.location.href);
                 tocfragmentTURL.searchParams.set("tocfragment", tocfragmentT);
