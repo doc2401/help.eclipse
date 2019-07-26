@@ -95,9 +95,12 @@
             if (navigation.style.display == '') {
                 navigation.style.display = 'none';//隐藏
                 document.getElementById('_iframe').style.width = "100%";
+                linkNav.style.left = '0%';//还原 
             } else {
                 navigation.style.display = '';//还原
                 document.getElementById('_iframe').style.width = "79%";
+
+                linkNav.style.left = '15%';//还原  
             }
         }
 
