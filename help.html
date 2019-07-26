@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Help - Eclipse Platform</title>
-    <style> 
-
+    <style>
         #navigation {
             position: fixed;
             top: 0;
             left: 0;
-            width: 20%; 
+            width: 20%;
             height: 98vh;
             overflow-y: scroll;
         }
@@ -91,6 +90,16 @@
         let tocfragmentTFlag = false;//是否存在 404
         let tocfragmentTURL = "";//对应地址
 
+        //目录显示控制
+        function displayToc() {
+            if (navigation.style.display == '') {
+                navigation.style.display = 'none';//隐藏
+                document.getElementById('_iframe').style.width = "100%";
+            } else {
+                navigation.style.display = '';//还原
+                document.getElementById('_iframe').style.width = "79%";
+            }
+        }
 
 
         //更新导航菜单栏所有超链接
@@ -483,29 +492,6 @@
 
     <nav id="navigation">
 
-        <nav id="linkNav">
-
-
-
-            <details>
-                <summary>tips</summary>
-                <li><span title="2s内连续点击根节点倒三角 可以完全展开">完全展开</span></li>
-            </details>
-
-            <button title="跳转Eclipse帮助文档"
-                onclick="window.open(`https://help.eclipse.org/${version}/index.jsp`); ">官网</button>
-            <button title="打开 en/中文 版"
-                onclick="tocfragmentTFlag && window.open(`${tocfragmentTURL}${window.location.hash}`);">en⇄中文</button>
-            <button onclick="findHash()" title="Link with Contents/右边页面同步到左边目录"
-                style="background: center/contain no-repeat url('images/e_auto_synch_toc.svg') ">
-                &nbsp;&nbsp;&nbsp;&nbsp;</button>
-
-            <button onclick="goPage(-1)">上一页</button>
-            <button onclick="goPage(1)">下一页</button>
-
-        </nav>
-
-
         <nav id="tocNav">
 
         </nav>
@@ -513,6 +499,24 @@
         <span id="bookmark" style="position: fixed;top: 100vh">🔖</span>
         <br><br>
 
+    </nav>
+    <nav id="linkNav">
+        <details>
+            <summary>tips</summary>
+            <li><span title="2s内连续点击根节点倒三角 可以完全展开">完全展开</span></li>
+        </details>
+
+        <button onclick="displayToc()">隐藏/显示</button>
+        <button title="跳转Eclipse帮助文档"
+            onclick="window.open(`https://help.eclipse.org/${version}/index.jsp`); ">官网</button>
+        <button title="打开 en/中文 版"
+            onclick="tocfragmentTFlag && window.open(`${tocfragmentTURL}${window.location.hash}`);">en⇄中文</button>
+        <button onclick="findHash()" title="Link with Contents/右边页面同步到左边目录"
+            style="background: center/contain no-repeat url('images/e_auto_synch_toc.svg') ">
+            &nbsp;&nbsp;&nbsp;&nbsp;</button>
+
+        <button onclick="goPage(-1)">上一页</button>
+        <button onclick="goPage(1)">下一页</button>
     </nav>
 
     <iframe frameborder=0 id="_iframe" name="_iframe" src="" onload="iframeLoad()">
