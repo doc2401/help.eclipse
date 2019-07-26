@@ -501,16 +501,17 @@
 
     </nav>
     <nav id="linkNav">
-        <details>
-            <summary>tips</summary>
-            <li><span title="2s内连续点击根节点倒三角 可以完全展开">完全展开</span></li>
-        </details>
 
-        <button onclick="displayToc()">隐藏/显示</button>
+
         <button title="跳转Eclipse帮助文档"
             onclick="window.open(`https://help.eclipse.org/${version}/index.jsp`); ">官网</button>
         <button title="打开 en/中文 版"
             onclick="tocfragmentTFlag && window.open(`${tocfragmentTURL}${window.location.hash}`);">en⇄中文</button>
+
+
+        <button onclick="displayToc()">隐藏/显示</button>
+        <button onclick="findHash()" title="2s内连续点击根节点倒三角 完全展开">展开节点</button>
+
         <button onclick="findHash()" title="Link with Contents/右边页面同步到左边目录"
             style="background: center/contain no-repeat url('images/e_auto_synch_toc.svg') ">
             &nbsp;&nbsp;&nbsp;&nbsp;</button>
