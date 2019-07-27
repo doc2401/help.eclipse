@@ -370,7 +370,6 @@
         function findHash() {
             let hash = window.location.hash;
             if (hash) {
-
                 let _iframe = document.getElementById('_iframe');
 
                 //删除开头的 #/ 或者 /
@@ -385,14 +384,11 @@
                 if (words.length > 0) {
                     console.log('words:' + words);
                     document.querySelectorAll("nav>details").forEach((detail) => {
-
                         if (detail.dataset.id && detail.dataset.id.indexOf(`/${words[0]}/`) >= 0) {
                             goHash = true;
                             detailsOpen(detail);
                         }
                     });
-
-
                 }
             }
         }
@@ -450,14 +446,10 @@
         //
         //检查全部地址 是否有404
         async function checkLink() {
-
             //不会阻塞 囧
             //document.querySelectorAll("nav>details").forEach((detail) => {  detailsOpen(detail); }); 
             //console.log("Open all");
-
-
             let nodes = new Array();
-
 
             let details = document.querySelectorAll("nav details");
             for (i = 0; i < details.length; i++) {
@@ -484,8 +476,35 @@
         }
 
 
-
         window.onload = load;
+
+        let deadLink;
+        const checkDeadLink = async function () {
+
+            deadLink = new Set();
+
+            //展开所有节点
+            document.querySelectorAll("nav>details").forEach((detail) => { detailsOpen(detail); });
+            //60s后检测 死链
+            setTimeout(async () => {
+                console.log('检查xml');
+                //检测死林克 
+                let details = document.querySelectorAll("nav details");
+                for (i = 0; i < details.length; i++) {
+                    let detail = details[i];
+                    if (detail.dataset.id) {
+                        let isOK = await fetch(context + detail.dataset.id).then(async (response) => response.status == 200);
+                        if (!isOK) {
+                            deadLink.add(detail.dataset.id);
+                        }
+                    }
+                }
+                console.log('deadLink:' + [...deadLink]);
+            }, 60000);
+            console.log('');
+        }
+
+
     </script>
 
 </head>
