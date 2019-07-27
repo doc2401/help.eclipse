@@ -479,9 +479,11 @@
         window.onload = load;
 
         let deadLink;
+        let deadLinkC;//死链所在包
         const checkDeadLink = async function () {
 
             deadLink = new Set();
+            deadLinkC = new Set();
 
             //展开所有节点
             document.querySelectorAll("nav>details").forEach((detail) => { detailsOpen(detail); });
@@ -496,10 +498,14 @@
                         let isOK = await fetch(context + detail.dataset.id).then(async (response) => response.status == 200);
                         if (!isOK) {
                             deadLink.add(detail.dataset.id);
+                            deadLinkC.add(detail.dataset.id.split("/")[1]);
                         }
                     }
                 }
                 console.log('deadLink:' + [...deadLink]);
+                console.log('deadLinkC:' + [...deadLinkC]);
+                //TODO 检测 是否存在
+
             }, 60000);
             console.log('');
         }
