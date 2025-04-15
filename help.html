@@ -154,11 +154,11 @@
             let tocfragment = windowsUrl.searchParams.get("tocfragment");
 
             //没有传递值则加载默认值
-            tocfragment = tocfragment || '../local-doc-help.eclipse.org-2019-06/tocfragment.xml';
+            tocfragment = tocfragment || '../local-doc-help.eclipse.2019-06/tocfragment.xml';
 
             console.log("tocfragment:" + tocfragment);
 
-            var match = /local-doc-help\.eclipse\.org-([^.]*)(\.zh)?\//.exec(tocfragment);
+            var match = /help\.eclipse\.([^.]*)(\.zh)?\//.exec(tocfragment);
             version = match[1];
             if (match[2]) {//如果是中英文互转
                 tocfragmentT = tocfragment.replace(".zh/tocfragment.xml", "/tocfragment.xml");
