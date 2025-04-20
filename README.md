@@ -10,22 +10,70 @@ Eclipse 文档静态版
 
 # 文档列表 
 
-* 201906191000 [Eclipse IDE 2019-06 (4.12) Documentation](help.html?tocfragment=../help.eclipse.2019-06/tocfragment.xml) 
-* 201903201000 [Eclipse IDE 2019-03 (4.11) Documentation](help.html?tocfragment=../help.eclipse.2019-03/tocfragment.xml) 
-* 201812191000 [Eclipse IDE 2018-12 (4.10) Documentation](help.html?tocfragment=../help.eclipse.2018-12/tocfragment.xml)
-* 201809191002 [Eclipse IDE 2018-09 (4.9) Documentation](help.html?tocfragment=../help.eclipse.2018-09/tocfragment.xml)
-* 201806271001 [Eclipse Photon (4.8) Documentation](help.html?tocfragment=../help.eclipse.photon/tocfragment.xml)
-* 201804111000 [Eclipse Oxygen (4.7) Documentation](help.html?tocfragment=../help.eclipse.oxygen/tocfragment.xml)
-* 201705151400 [Eclipse Neon (4.6) Documentation](help.html?tocfragment=../help.eclipse.neon/tocfragment.xml)
-* 201602261000 [Eclipse Mars (4.5) Documentation](help.html?tocfragment=../help.eclipse.mars/tocfragment.xml)
-* 201502271000 [Eclipse Luna (4.4) Documentation](help.html?tocfragment=../help.eclipse.luna/tocfragment.xml)
-* 201402280900 [Eclipse Kepler (4.3) Documentation](help.html?tocfragment=../help.eclipse.kepler/tocfragment.xml)
+* [Eclipse documentation 2025-06](help.html?v=2025-06)
+* [Eclipse documentation 2025-03](help.html?v=2025-03)
+* [Eclipse documentation 2024-12](help.html?v=2024-12)
+* [Eclipse documentation 2024-09](help.html?v=2024-09)
+* [Eclipse documentation 2024-06](help.html?v=2024-06)
+* [Eclipse documentation 2024-03](help.html?v=2024-03)
+* [Eclipse documentation 2023-12](help.html?v=2023-12) *4.30.0*
+* [Eclipse documentation 2023-09](help.html?v=2023-09) *4.29.0*
+* [Eclipse documentation 2023-06](help.html?v=2023-06) *4.28.0*
+* [Eclipse documentation 2023-03](help.html?v=2023-03) *4.27.0*
+* [Eclipse documentation 2022-12](help.html?v=2022-12) *4.26.0*
+* [Eclipse documentation 2022-09](help.html?v=2022-09) *4.25.0*
+* [Eclipse documentation 2022-06](help.html?v=2022-06) *4.24.0*
+* [Eclipse documentation 2022-03](help.html?v=2022-03) *4.23.0*
+* [Eclipse documentation 2021-12](help.html?v=2021-12) *4.22.0*
+* [Eclipse documentation 2021-09](help.html?v=2021-09) *4.21.0*
+* [Eclipse documentation 2021-06](help.html?v=2021-06) *4.20.0*
+* [Eclipse documentation 2021-03](help.html?v=2021-03) *4.19.0*
+* [Eclipse documentation 2020-12](help.html?v=2020-12) *4.18.0* 
+* [Eclipse documentation 2020-09](help.html?v=2020-09) *4.17.0*
+* [Eclipse documentation 2020-06](help.html?v=2020-06) *4.16.0*
+* [Eclipse documentation 2020-03](help.html?v=2020-03) *4.15.0*
+* [Eclipse documentation 2019-12](help.html?v=2019-12) *4.14.0*
+* [Eclipse documentation 2019-09](help.html?v=2019-09) *4.13.0*
+* 201906191000 [Eclipse documentation 2019-06](help.html?v=2019-06) *4.12.0*
+* 201903201000 [Eclipse documentation 2019-03](help.html?v=2019-03) *4.11.0*
+* 201812191000 [Eclipse documentation 2018-12](help.html?v=2018-12) *4.10.0*
+* 201809191002 [Eclipse documentation 2018-09](help.html?v=2018-09) *4.9.0*
+
+* 201806271001 [Eclipse Photon (4.8) Documentation](help.html?v=photon) *4.8*
+* 201804111000 [Eclipse Oxygen (4.7) Documentation](help.html??v=oxygen) *4.7*
+* 201705151400 [Eclipse Neon (4.6) Documentation](help.html?v=neon) *4.6*
+* 201602261000 [Eclipse Mars (4.5) Documentation](help.html?v=mars) *4.5*
+* 201502271000 [Eclipse Luna (4.4) Documentation](help.html?v=luna) *4.4*
+* 201402280900 [Eclipse Kepler (4.3) Documentation](help.html?v=kepler) *4.3*
  
 
 # script
 
 `更新日志`[CHANGELOG.md](CHANGELOG.md)
 
+
+ ```powershell
+## 同步文件
+rsync -avz  --safe-links   --recursive mirrors.nju.edu.cn::eclipse/releases/2024-12/ 2024-12
+
+##下载目录
+Invoke-WebRequest -Uri "https://help.eclipse.org/2024-12/advanced/tocfragment" -OutFile "toc/2024-12.tocfragment.xml"
+
+## 解压文件
+java ExtractHelpLib "toc/2024-12.tocfragment.xml"  "../help.eclipse.mirrors/2024-12/202412041000/plugins"
+
+Copy-Item -Path "toc/2024-12.tocfragment.xml" -Destination "target/toc/2024-12/tocfragment.xml"
+
+cd target/toc/2024-12/ 
+
+git init
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:doc2401/help.eclipse.2024-12.git
+git push -u origin main
+
+
+ ```
 
  ```bash
  
