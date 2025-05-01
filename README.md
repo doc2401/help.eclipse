@@ -10,30 +10,30 @@ Eclipse 文档静态版
 
 # 文档列表 
 
-* [Eclipse documentation 2025-06](help.html?v=2025-06)
-* [Eclipse documentation 2025-03](help.html?v=2025-03)
-* [Eclipse documentation 2024-12](help.html?v=2024-12)
-* [Eclipse documentation 2024-09](help.html?v=2024-09)
-* [Eclipse documentation 2024-06](help.html?v=2024-06)
-* [Eclipse documentation 2024-03](help.html?v=2024-03)
-* [Eclipse documentation 2023-12](help.html?v=2023-12) *4.30.0*
-* [Eclipse documentation 2023-09](help.html?v=2023-09) *4.29.0*
-* [Eclipse documentation 2023-06](help.html?v=2023-06) *4.28.0*
-* [Eclipse documentation 2023-03](help.html?v=2023-03) *4.27.0*
-* [Eclipse documentation 2022-12](help.html?v=2022-12) *4.26.0*
-* [Eclipse documentation 2022-09](help.html?v=2022-09) *4.25.0*
-* [Eclipse documentation 2022-06](help.html?v=2022-06) *4.24.0*
-* [Eclipse documentation 2022-03](help.html?v=2022-03) *4.23.0*
-* [Eclipse documentation 2021-12](help.html?v=2021-12) *4.22.0*
-* [Eclipse documentation 2021-09](help.html?v=2021-09) *4.21.0*
-* [Eclipse documentation 2021-06](help.html?v=2021-06) *4.20.0*
-* [Eclipse documentation 2021-03](help.html?v=2021-03) *4.19.0*
-* [Eclipse documentation 2020-12](help.html?v=2020-12) *4.18.0* 
-* [Eclipse documentation 2020-09](help.html?v=2020-09) *4.17.0*
-* [Eclipse documentation 2020-06](help.html?v=2020-06) *4.16.0*
-* [Eclipse documentation 2020-03](help.html?v=2020-03) *4.15.0*
-* [Eclipse documentation 2019-12](help.html?v=2019-12) *4.14.0*
-* [Eclipse documentation 2019-09](help.html?v=2019-09) *4.13.0*
+* 202504111000 [Eclipse documentation 2025-06](help.html?v=2025-06)
+* 202503121000 [Eclipse documentation 2025-03](help.html?v=2025-03)
+* 202412041000 [Eclipse documentation 2024-12](help.html?v=2024-12)
+* 202409111000 [Eclipse documentation 2024-09](help.html?v=2024-09)
+* 202406121000 [Eclipse documentation 2024-06](help.html?v=2024-06)
+* 202403131000 [Eclipse documentation 2024-03](help.html?v=2024-03)
+* 202312061001 [Eclipse documentation 2023-12](help.html?v=2023-12) *4.30.0*
+* 202309131000 [Eclipse documentation 2023-09](help.html?v=2023-09) *4.29.0*
+* 202306141000 [Eclipse documentation 2023-06](help.html?v=2023-06) *4.28.0*
+* 202303151000 [Eclipse documentation 2023-03](help.html?v=2023-03) *4.27.0*
+* 202212071000 [Eclipse documentation 2022-12](help.html?v=2022-12) *4.26.0*
+* 202209141001 [Eclipse documentation 2022-09](help.html?v=2022-09) *4.25.0*
+* 202206151000 [Eclipse documentation 2022-06](help.html?v=2022-06) *4.24.0*
+* 202203161000 [Eclipse documentation 2022-03](help.html?v=2022-03) *4.23.0*
+* 202112081000 [Eclipse documentation 2021-12](help.html?v=2021-12) *4.22.0*
+* 202109151000 [Eclipse documentation 2021-09](help.html?v=2021-09) *4.21.0*
+* 202106161001 [Eclipse documentation 2021-06](help.html?v=2021-06) *4.20.0*
+* 202103171000 [Eclipse documentation 2021-03](help.html?v=2021-03) *4.19.0*
+* 202012161000 [Eclipse documentation 2020-12](help.html?v=2020-12) *4.18.0* 
+* 202009161000 [Eclipse documentation 2020-09](help.html?v=2020-09) *4.17.0*
+* 202006171000 [Eclipse documentation 2020-06](help.html?v=2020-06) *4.16.0*
+* 202003181000 [Eclipse documentation 2020-03](help.html?v=2020-03) *4.15.0*
+* 201912181000 [Eclipse documentation 2019-12](help.html?v=2019-12) *4.14.0*
+* 201909181001 [Eclipse documentation 2019-09](help.html?v=2019-09) *4.13.0*
 * 201906191000 [Eclipse documentation 2019-06](help.html?v=2019-06) *4.12.0*
 * 201903201000 [Eclipse documentation 2019-03](help.html?v=2019-03) *4.11.0*
 * 201812191000 [Eclipse documentation 2018-12](help.html?v=2018-12) *4.10.0*
@@ -60,17 +60,20 @@ rsync -avz  --safe-links   --recursive mirrors.nju.edu.cn::eclipse/releases/2024
 Invoke-WebRequest -Uri "https://help.eclipse.org/2024-12/advanced/tocfragment" -OutFile "toc/2024-12.tocfragment.xml"
 
 ## 解压文件
-java ExtractHelpLib "toc/2024-12.tocfragment.xml"  "../help.eclipse.mirrors/2024-12/202412041000/plugins"
+java ExtractHelpLib "toc/2022-09.tocfragment.xml"  "../help.eclipse.mirrors/2022-09/202209141001/plugins"
 
-Copy-Item -Path "toc/2024-12.tocfragment.xml" -Destination "target/toc/2024-12/tocfragment.xml"
+Copy-Item -Path "toc/2022-09.tocfragment.xml" -Destination "target/toc/2022-09/tocfragment.xml"
 
-cd target/toc/2024-12/ 
+cd target/toc/2022-09/ 
 
 git init
+git add .
 git commit -m "first commit"
 git branch -M main
-git remote add origin git@github.com:doc2401/help.eclipse.2024-12.git
+git remote add origin git@github.com:doc2401/help.eclipse.2022-09.git
 git push -u origin main
+cd ../../../
+
 
 
  ```
